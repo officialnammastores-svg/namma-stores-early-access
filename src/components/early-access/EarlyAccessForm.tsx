@@ -134,14 +134,20 @@ export const EarlyAccessForm: React.FC<EarlyAccessFormProps> = ({
 
       const result = await apiResponse.json().catch(() => null);
 
-      if (apiResponse.ok && result?.success) {
-        onSuccess({
-          name: trimmedName,
-          phone: tenDigitPhone,
-          isDuplicate: Boolean(result.isDuplicate),
-        });
-        return;
-      }
+if (apiResponse.ok && result?.success) {
+  // Track a new lead in Meta Pixel only after the server confirms success.
+  // Do not count duplicate registrations as new leads.
+  if (!result.isDuplicate && typeof window !== 'undefined') {
+    (window as any).fbq?.('track', 'Lead');
+  }
+
+  onSuccess({
+    name: trimmedName,
+    phone: tenDigitPhone,
+    isDuplicate: Boolean(result.isDuplicate),
+  });
+  return;
+}
 
       setServerError(
         result?.error || 'Unable to submit your registration. Please check your details and try again.'
