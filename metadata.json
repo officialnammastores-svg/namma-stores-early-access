@@ -1,0 +1,6 @@
+{
+  "name": "Namma Stores — Early Access | Whitefield",
+  "description": "Namma Stores is coming to Whitefield. Join Early Access to get launch updates and exclusive early-access offers from your local stores.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
